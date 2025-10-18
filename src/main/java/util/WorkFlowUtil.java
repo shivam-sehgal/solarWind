@@ -9,6 +9,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import model.WorkFlowTemplate;
 
+/**
+ * Servoce that loads template for the tennant called from Expense request for now should be execute from separate servoce class taking new requests and spinning
+ * a thread for that request
+ */
 public class WorkFlowUtil {
 
   private static ObjectMapper objectMapper = new ObjectMapper();

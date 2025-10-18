@@ -41,7 +41,7 @@ import util.WorkFlowUtil;
 public class Main {
 
   public static void main(String[] args) {
-    WorkFlowTemplate workFlowTemplate = WorkFlowUtil.loadTemplateFromTenant("xyz");
+
 
 
   }

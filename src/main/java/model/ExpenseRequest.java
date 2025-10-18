@@ -2,13 +2,14 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import services.UserService;
 import util.WorkFlowUtil;
 
 public class ExpenseRequest {
 
   final String requestId;
   final String tennatId;
-  final User requestor;
+  public final User requestor;
   final double amount;
   List<StepStatus> stepStatuses;
 
@@ -37,6 +38,9 @@ public class ExpenseRequest {
     executeTemplate();
   }
 
+  /**
+   * main executor should be added in the Requestexecutor service but due to lack of time written here
+   */
 
   public void executeTemplate() {
 
@@ -50,10 +54,44 @@ public class ExpenseRequest {
           break;
       }
     }
+    // if all steps executed succesfully we will mark request status as done else pending or rejected if any step status is rejected
+    processFinalStatus();
 
-    setFinalStatus();
+
+  }
+
+  /**
+   * PROCESSING THE FINAL STTAUS OF REQUEST
+   */
+  private void processFinalStatus() {
+    List<StepSpec> stepSpecs = workFlowTemplate.steps;
+    for(StepSpec stepSpec: stepSpecs) {
+        StepStatus stepStatus = getStepStatus(stepSpec);
+        if(stepStatus.userAction==Action.IN_REVIEW) {
+          this.requestStatus = RequestStatus.PENDING;
+          return;
+        }
+      if(stepStatus.userAction==Action.REJECT) {
+        this.requestStatus = RequestStatus.REJECTED;
+        return;
+      }
+
+    }
+    this.requestStatus = RequestStatus.APPROVED;
+
+  }
 
 
+
+
+
+  private boolean assignIfRequired(StepStatus stepStatus) {
+    if(stepStatus.assignedTo!=null) {
+      System.out.println("step is already assigned to user");
+      return false;
+    }
+    UserService.assignUser(this, stepStatus);
+    return true;
   }
 
   private StepStatus getStepStatus(StepSpec stepSpec) {

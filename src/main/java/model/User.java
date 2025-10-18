@@ -1,7 +1,9 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import java.util.HashSet;
 import java.util.Set;
+
 
 public class User {
 
@@ -16,6 +18,16 @@ public class User {
     this.tenenantId = tenenantId;
     roles.addAll(roles);
   }
+
+  public String getTenenantId() {
+    return tenenantId;
+  }
+
+  public Set<Role>  getRoles() {
+    return roles;
+  }
+
+
 
 
 }

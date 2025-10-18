@@ -2,8 +2,12 @@ package model;
 
 public class StepStatus {
 
-  StepSpec stepSpec;
+  public StepSpec stepSpec;
   User assignedTo;
   Action userAction;
+
+  public void setAssignedTo(User user) {
+    this.assignedTo=user;
+  }
 
 }
