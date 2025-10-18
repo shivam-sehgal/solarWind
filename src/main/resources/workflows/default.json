@@ -1,0 +1,15 @@
+[
+
+  {
+    "id": "expense_aprroval_1",
+    "name": "Expense Flow v1",
+    "steps": [
+      {"name":  "Manager Review","roleRequired": "MANAGER"},
+      {"name":  "Finance Check","roleRequired": "FINANCE",
+        "condition": "amount>10000"
+      }
+    ]
+
+
+  }
+]
